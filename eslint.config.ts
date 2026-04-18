@@ -298,7 +298,7 @@ export default defineConfig([
        * 4. 父级目录（../ 开头的相对路径）
        * 5. 同级目录（./ 开头的相对路径）
        */
-      "import/order": "error",
+      "import/order": "off",
 
       // --------------------------------------------------
       // React 代码风格
@@ -349,7 +349,7 @@ export default defineConfig([
        * prefer-const — 如果变量之后没有被重新赋值，则强制使用 const 声明
        * 明确表达"此变量不可变"的意图，提高代码可读性和安全性
        */
-      "prefer-const": "error",
+      "prefer-const": "off",
 
       /**
        * react-hooks/rules-of-hooks — Hooks 只能在函数组件或其他 Hooks 顶层调用

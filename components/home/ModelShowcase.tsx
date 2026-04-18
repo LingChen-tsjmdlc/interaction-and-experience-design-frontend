@@ -175,7 +175,7 @@ function ModelCardItem({
 
 /** 模型展示区域 — 3x3 Grid 布局 */
 export function ModelShowcase() {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   // 从 i18n 读取模型数据
   const modelData = useMemo(() => {

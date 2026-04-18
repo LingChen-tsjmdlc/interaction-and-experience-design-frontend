@@ -2,8 +2,7 @@
 
 import { useTranslation } from "react-i18next";
 import { motion, useInView } from "framer-motion";
-import { useRef, useState, useMemo, forwardRef } from "react";
-import React from "react";
+import React, { useRef, useState, useMemo, forwardRef } from "react";
 import { useTheme } from "next-themes";
 import { Icon } from "@iconify/react";
 import { CometCard as CometCardLightMode } from "@/components/aceternity-ui/CometCardLiaghtMode";
@@ -631,6 +630,7 @@ export function FeatureSection() {
   return (
     <>
       {/* Global styles for split-text animation */}
+      {/* eslint-disable-next-line react/no-unknown-property */}
       <style jsx global>{`
         .split-parent {
           display: block !important;
