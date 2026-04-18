@@ -41,7 +41,7 @@ export const ThemeSwitch: FC<ThemeSwitchProps> = ({
 
     const raw = localStorage.getItem("theme-preference");
     const saved = raw === "light" || raw === "dark" ? (raw as Theme) : null;
-    const effectiveTheme = saved || "light";
+    const effectiveTheme = saved || "dark";
 
     setTheme(effectiveTheme);
     setIsSelected(effectiveTheme === "light");
