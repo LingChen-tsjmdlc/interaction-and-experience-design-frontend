@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect, useRef, useCallback } from "react";
-import { SparklesCore } from "@/components/aceternity-ui/Sparkles";
 import { AnimatePresence, motion } from "motion/react";
+import { SparklesCore } from "@/components/aceternity-ui/Sparkles";
 import { cn } from "@/lib/utils";
 
 const IconDotsVertical: React.FC<React.SVGProps<SVGSVGElement>> = ({ className, ...props }) => (
@@ -52,7 +52,9 @@ export const Compare = ({
   const autoplayRef = useRef<NodeJS.Timeout | null>(null);
 
   const startAutoplay = useCallback(() => {
-    if (!autoplay) return;
+    if (!autoplay) {
+      return;
+    }
 
     const startTime = Date.now();
     const animate = () => {
@@ -112,7 +114,9 @@ export const Compare = ({
 
   const handleMove = useCallback(
     (clientX: number) => {
-      if (!sliderRef.current) return;
+      if (!sliderRef.current) {
+        return;
+      }
       if (slideMode === "hover" || (slideMode === "drag" && isDragging)) {
         const rect = sliderRef.current.getBoundingClientRect();
         const x = clientX - rect.left;

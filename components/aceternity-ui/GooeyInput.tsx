@@ -146,7 +146,9 @@ export function GooeyInput({
   );
 
   const handleExpand = useCallback(() => {
-    if (!disabled) setExpanded(true);
+    if (!disabled) {
+      setExpanded(true);
+    }
   }, [disabled, setExpanded]);
 
   const handleChange = useCallback(
@@ -157,7 +159,9 @@ export function GooeyInput({
   );
 
   const handleBlur = useCallback(() => {
-    if (!searchText) setExpanded(false);
+    if (!searchText) {
+      setExpanded(false);
+    }
   }, [searchText, setExpanded]);
 
   // 亮色 zinc-400 / 暗色 zinc-600 底色，白色文字

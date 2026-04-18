@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from "react";
-import { Button, Textarea, Card } from "@heroui/react";
+import { Button, Textarea } from "@heroui/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Icon } from "@iconify/react";
 import { useTranslation } from "react-i18next";
@@ -27,7 +27,9 @@ export function SearchInput({ className = "", onSearch }: SearchInputProps) {
 
   // 占位文字打字机效果
   useEffect(() => {
-    if (value) return;
+    if (value) {
+      return;
+    }
 
     const currentWord = placeholderWords[currentWordIndex];
 

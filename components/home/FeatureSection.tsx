@@ -5,6 +5,7 @@ import { motion, useInView } from "framer-motion";
 import { useRef, useState, useMemo, forwardRef } from "react";
 import React from "react";
 import { useTheme } from "next-themes";
+import { Icon } from "@iconify/react";
 import { CometCard as CometCardLightMode } from "@/components/aceternity-ui/CometCardLiaghtMode";
 import { CometCard as CometCardDarkMode } from "@/components/aceternity-ui/CometCardeDarkMode";
 import SplitText from "@/components/reactbits-ui/SplitText";
@@ -16,7 +17,6 @@ import { Compare } from "@/components/aceternity-ui/Compare";
 import { Terminal } from "@/components/aceternity-ui/Terminal";
 import { AnimatedBeam } from "@/components/magic-ui/AnimatedBeam";
 import { Tree, type TreeViewElement } from "@/components/magic-ui/FileTree";
-import { Icon } from "@iconify/react";
 
 /** 功能项定义 */
 const FEATURE_KEYS = [
@@ -109,7 +109,9 @@ function FeatureRow(props: FeatureRowProps) {
   const { theme, systemTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const isDark = useMemo(() => {
-    if (!mounted) return true;
+    if (!mounted) {
+      return true;
+    }
     return (theme === "system" ? systemTheme : theme) === "dark";
   }, [theme, systemTheme, mounted]);
   React.useEffect(() => setMounted(true), []);
@@ -318,7 +320,9 @@ function FeatureRow(props: FeatureRowProps) {
 
       case "deepThink":
         // animCycle 变化时 key 变化 → 强制重新挂载 Terminal → 打字机动画重播
-        if (!terminalData) return null;
+        if (!terminalData) {
+          return null;
+        }
         return (
           <div className="flex items-center justify-center w-full h-full bg-white dark:bg-zinc-900 rounded-2xl overflow-hidden">
             <Terminal

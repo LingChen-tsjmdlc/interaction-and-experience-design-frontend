@@ -1,9 +1,9 @@
 "use client";
-import { cn } from "@/lib/utils";
 import React, { useEffect, useRef, useState } from "react";
 import { createNoise3D } from "simplex-noise";
 import { motion } from "motion/react";
 import { useTheme } from "next-themes";
+import { cn } from "@/lib/utils";
 
 interface VortexProps {
   children?: any;
@@ -47,14 +47,16 @@ export const Vortex = (props: VortexProps) => {
   // ===== 主题感知背景色 =====
   const { resolvedTheme } = useTheme();
   const [backgroundColor, setBackgroundColor] = useState(
-    (typeof window !== "undefined" && document.documentElement.classList.contains("dark"))
+    typeof window !== "undefined" && document.documentElement.classList.contains("dark")
       ? (props.darkBackgroundColor ?? "#141414")
       : (props.lightBackgroundColor ?? "#fcfcfc"),
   );
 
   // 主题切换时更新 Canvas 背景色
   useEffect(() => {
-    if (!resolvedTheme) return;
+    if (!resolvedTheme) {
+      return;
+    }
     const newBg =
       resolvedTheme === "dark"
         ? (props.darkBackgroundColor ?? "#141414")
@@ -73,7 +75,7 @@ export const Vortex = (props: VortexProps) => {
   let tick = 0;
   const noise3D = createNoise3D();
   let particleProps = new Float32Array(particlePropsLength);
-  let center: [number, number] = [0, 0];
+  const center: [number, number] = [0, 0];
 
   const HALF_PI: number = 0.5 * Math.PI;
   const TAU: number = 2 * Math.PI;
@@ -81,11 +83,10 @@ export const Vortex = (props: VortexProps) => {
   const rand = (n: number): number => n * Math.random();
   const randRange = (n: number): number => n - rand(2 * n);
   const fadeInOut = (t: number, m: number): number => {
-    let hm = 0.5 * m;
+    const hm = 0.5 * m;
     return Math.abs(((t + hm) % m) - hm) / hm;
   };
-  const lerp = (n1: number, n2: number, speed: number): number =>
-    (1 - speed) * n1 + speed * n2;
+  const lerp = (n1: number, n2: number, speed: number): number => (1 - speed) * n1 + speed * n2;
 
   const setup = () => {
     const canvas = canvasRef.current;
@@ -109,7 +110,9 @@ export const Vortex = (props: VortexProps) => {
 
   const initParticle = (i: number) => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!canvas) {
+      return;
+    }
 
     let x, y, vx, vy, life, ttl, speed, radius, hue;
 
@@ -151,11 +154,15 @@ export const Vortex = (props: VortexProps) => {
   const draw = () => {
     const canvas = canvasRef.current;
     const offscreen = offscreenRef.current;
-    if (!canvas || !offscreen) return;
+    if (!canvas || !offscreen) {
+      return;
+    }
 
     const ctx = canvas.getContext("2d");
     const offCtx = offscreen.getContext("2d");
-    if (!ctx || !offCtx) return;
+    if (!ctx || !offCtx) {
+      return;
+    }
 
     tick++;
 
@@ -185,9 +192,11 @@ export const Vortex = (props: VortexProps) => {
 
   const updateParticle = (i: number, ctx: CanvasRenderingContext2D) => {
     const canvas = offscreenRef.current!;
-    if (!canvas) return;
+    if (!canvas) {
+      return;
+    }
 
-    let i2 = 1 + i,
+    const i2 = 1 + i,
       i3 = 2 + i,
       i4 = 3 + i,
       i5 = 4 + i,
@@ -266,10 +275,7 @@ export const Vortex = (props: VortexProps) => {
   };
 
   /** 离屏 Canvas 上执行光晕效果（blur + brightness + lighter） */
-  const renderGlow = (
-    canvas: HTMLCanvasElement,
-    ctx: CanvasRenderingContext2D,
-  ) => {
+  const renderGlow = (canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) => {
     ctx.save();
     ctx.filter = `blur(${glowBlur}px) brightness(${glowBrightness})`;
     ctx.globalCompositeOperation = "lighter";
@@ -284,10 +290,7 @@ export const Vortex = (props: VortexProps) => {
   };
 
   /** 离屏 Canvas 上最终合成到屏幕 */
-  const renderToScreen = (
-    canvas: HTMLCanvasElement,
-    ctx: CanvasRenderingContext2D,
-  ) => {
+  const renderToScreen = (canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) => {
     ctx.save();
     ctx.globalCompositeOperation = "lighter";
     ctx.drawImage(canvas, 0, 0);
@@ -323,9 +326,9 @@ export const Vortex = (props: VortexProps) => {
         className="absolute inset-0 z-0 flex h-full w-full items-center justify-center bg-transparent"
       >
         {/* 主 Canvas：背景色 + 合成后的粒子层 */}
-        <canvas ref={canvasRef}></canvas>
+        <canvas ref={canvasRef} />
         {/* 离屏 Canvas：纯粒子 + 光晕计算，CSS 隐藏不显示 */}
-        <canvas ref={offscreenRef} className="hidden"></canvas>
+        <canvas ref={offscreenRef} className="hidden" />
       </motion.div>
 
       <div className={cn("relative z-10", props.className)}>{props.children}</div>

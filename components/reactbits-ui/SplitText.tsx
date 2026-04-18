@@ -59,9 +59,13 @@ const SplitText: React.FC<SplitTextProps> = ({
 
   useGSAP(
     () => {
-      if (!ref.current || !text || !fontsLoaded) return;
+      if (!ref.current || !text || !fontsLoaded) {
+        return;
+      }
       // Prevent re-animation if already completed
-      if (animationCompletedRef.current) return;
+      if (animationCompletedRef.current) {
+        return;
+      }
       const el = ref.current as HTMLElement & {
         _rbsplitInstance?: GSAPSplitText;
       };
@@ -86,13 +90,18 @@ const SplitText: React.FC<SplitTextProps> = ({
       const start = `top ${startPct}%${sign}`;
       let targets: Element[] = [];
       const assignTargets = (self: GSAPSplitText) => {
-        if (splitType.includes("chars") && (self as GSAPSplitText).chars?.length)
+        if (splitType.includes("chars") && (self as GSAPSplitText).chars?.length) {
           targets = (self as GSAPSplitText).chars;
-        if (!targets.length && splitType.includes("words") && self.words.length)
+        }
+        if (!targets.length && splitType.includes("words") && self.words.length) {
           targets = self.words;
-        if (!targets.length && splitType.includes("lines") && self.lines.length)
+        }
+        if (!targets.length && splitType.includes("lines") && self.lines.length) {
           targets = self.lines;
-        if (!targets.length) targets = self.chars || self.words || self.lines;
+        }
+        if (!targets.length) {
+          targets = self.chars || self.words || self.lines;
+        }
       };
       const splitInstance = new GSAPSplitText(el, {
         type: splitType,
@@ -132,7 +141,9 @@ const SplitText: React.FC<SplitTextProps> = ({
       el._rbsplitInstance = splitInstance;
       return () => {
         ScrollTrigger.getAll().forEach((st) => {
-          if (st.trigger === el) st.kill();
+          if (st.trigger === el) {
+            st.kill();
+          }
         });
         try {
           splitInstance.revert();

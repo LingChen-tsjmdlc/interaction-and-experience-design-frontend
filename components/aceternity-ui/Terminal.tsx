@@ -100,12 +100,16 @@ function useAudio(enabled: boolean) {
   const readyRef = useRef(false);
 
   useEffect(() => {
-    if (!enabled) return;
+    if (!enabled) {
+      return;
+    }
     const init = async () => {
       try {
         ctxRef.current = new AudioContext();
         const res = await fetch("/sounds/sound.ogg");
-        if (!res.ok) return;
+        if (!res.ok) {
+          return;
+        }
         bufferRef.current = await ctxRef.current.decodeAudioData(await res.arrayBuffer());
         readyRef.current = true;
       } catch {}
@@ -117,8 +121,12 @@ function useAudio(enabled: boolean) {
   }, [enabled]);
 
   const playSound = (sound: [number, number] | undefined) => {
-    if (!readyRef.current || !ctxRef.current || !bufferRef.current || !sound) return;
-    if (ctxRef.current.state === "suspended") ctxRef.current.resume();
+    if (!readyRef.current || !ctxRef.current || !bufferRef.current || !sound) {
+      return;
+    }
+    if (ctxRef.current.state === "suspended") {
+      ctxRef.current.resume();
+    }
     const src = ctxRef.current.createBufferSource();
     src.buffer = bufferRef.current;
     src.connect(ctxRef.current.destination);
@@ -138,7 +146,9 @@ function useInView(ref: React.RefObject<HTMLElement | null>, once = true) {
 
   useEffect(() => {
     const el = ref.current;
-    if (!el || (once && triggered.current)) return;
+    if (!el || (once && triggered.current)) {
+      return;
+    }
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -312,13 +322,17 @@ export function Terminal({
   const isLastCommand = commandIdx === commands.length - 1;
 
   useEffect(() => {
-    if (!inView || phase !== "idle") return;
+    if (!inView || phase !== "idle") {
+      return;
+    }
     const t = setTimeout(() => setPhase("typing"), initialDelay);
     return () => clearTimeout(t);
   }, [inView, phase, initialDelay]);
 
   useEffect(() => {
-    if (phase !== "typing") return;
+    if (phase !== "typing") {
+      return;
+    }
 
     if (charIdx < currentCommand.length) {
       const char = currentCommand[charIdx];
@@ -343,7 +357,9 @@ export function Terminal({
   }, [phase, charIdx, currentCommand, typingSpeed, down, up]);
 
   useEffect(() => {
-    if (phase !== "executing") return;
+    if (phase !== "executing") {
+      return;
+    }
 
     setLines((prev) => [...prev, { type: "command", content: currentCommand }]);
     setCurrentText("");
@@ -359,7 +375,9 @@ export function Terminal({
   }, [phase, currentCommand, currentOutputs.length, isLastCommand]);
 
   useEffect(() => {
-    if (phase !== "outputting") return;
+    if (phase !== "outputting") {
+      return;
+    }
 
     if (outputIdx >= 0 && outputIdx < currentOutputs.length) {
       const t = setTimeout(() => {
@@ -380,7 +398,9 @@ export function Terminal({
   }, [phase, outputIdx, currentOutputs, isLastCommand]);
 
   useEffect(() => {
-    if (phase !== "pausing") return;
+    if (phase !== "pausing") {
+      return;
+    }
     const t = setTimeout(() => {
       setCharIdx(0);
       setOutputIdx(-1);

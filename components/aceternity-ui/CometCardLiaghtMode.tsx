@@ -28,7 +28,9 @@ export const CometCard = ({
   const [mounted, setMounted] = useState(false);
   // 避免服务端渲染不匹配：默认暗色（与项目默认一致），挂载后切换
   const isDark = useMemo(() => {
-    if (!mounted) return true;
+    if (!mounted) {
+      return true;
+    }
     const current = theme === "system" ? systemTheme : theme;
     return current === "dark";
   }, [theme, systemTheme, mounted]);
@@ -70,7 +72,9 @@ export const CometCard = ({
   const glareBackground = isDark ? glareBgLight : glareBgDark;
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!ref.current) return;
+    if (!ref.current) {
+      return;
+    }
 
     const rect = ref.current.getBoundingClientRect();
 

@@ -2,12 +2,7 @@
 
 import React, { createContext, useCallback, useContext, useState } from "react";
 import * as AccordionPrimitive from "@radix-ui/react-accordion";
-import {
-  ChevronRight,
-  FileIcon as LucideFile,
-  FolderOpen,
-  Folder as FolderIcon,
-} from "lucide-react";
+import { FileIcon as LucideFile, FolderOpen, Folder as FolderIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
@@ -42,7 +37,9 @@ const useTree = () => {
 };
 
 const isFolderElement = (element: TreeViewElement) => {
-  if (element.type) return element.type === "folder";
+  if (element.type) {
+    return element.type === "folder";
+  }
   return Array.isArray(element.children);
 };
 
@@ -75,7 +72,9 @@ export const Tree: React.FC<TreeViewProps> = ({
   const selectItem = useCallback((id: string) => setSelectedId(id), []);
   const handleExpand = useCallback((id: string) => {
     setExpandedItems((prev) => {
-      if (prev?.includes(id)) return prev.filter((item) => item !== id);
+      if (prev?.includes(id)) {
+        return prev.filter((item) => item !== id);
+      }
       return [...(prev ?? []), id];
     });
   }, []);
@@ -83,24 +82,31 @@ export const Tree: React.FC<TreeViewProps> = ({
   // 初始选中时展开父级
   const expandParent = useCallback(
     (els?: TreeViewElement[], selId?: string, path: string[] = []) => {
-      if (!els || !selId) return;
+      if (!els || !selId) {
+        return;
+      }
       els.forEach((el) => {
         const newPath = [...path, el.id];
-        if (el.id === selId)
+        if (el.id === selId) {
           setExpandedItems((prev) => [...new Set([...(prev ?? []), ...newPath])]);
-        if (Array.isArray(el.children)) expandParent(el.children, selId, newPath);
+        }
+        if (Array.isArray(el.children)) {
+          expandParent(el.children, selId, newPath);
+        }
       });
     },
     [],
   );
 
   React.useEffect(() => {
-    if (initialSelectedId) expandParent(elements, initialSelectedId);
+    if (initialSelectedId) {
+      expandParent(elements, initialSelectedId);
+    }
   }, [initialSelectedId, elements, expandParent]);
 
   const renderElements = (items: TreeViewElement[]) =>
     items.map((element) => {
-      if (isFolderElement(element))
+      if (isFolderElement(element)) {
         return (
           <Folder
             key={element.id}
@@ -114,6 +120,7 @@ export const Tree: React.FC<TreeViewProps> = ({
             {Array.isArray(element.children) ? renderElements(element.children) : null}
           </Folder>
         );
+      }
       return (
         <File key={element.id} value={element.id} isSelectable={element.isSelectable}>
           <span>{element.name}</span>
