@@ -1,0 +1,317 @@
+name: CI & CD
+
+on:
+  push:
+    branches: [ main, aliyun-sever, inside-sever ]
+  pull_request:
+    branches: [ main, aliyun-sever, inside-sever ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. 检出代码
+      - name: Checkout - 检出代码
+        uses: actions/checkout@v3
+
+      # 2. 安装 Node.js
+      - name: Setup Node - 安装 Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 22
+
+      - name: Install pnpm - 安装 pnpm
+        run: |
+          npm install -g pnpm
+          pnpm -v
+          ls -la $(which pnpm)
+
+      # 3. 安装依赖
+      - name: Install deps - 安装依赖
+        run: pnpm install
+
+      # 4. 代码检查
+      - name: Lint & TypeCheck - 代码 lint 和 ts 检查
+        run: |
+          pnpm run lint --fix
+          pnpm tsc --noEmit
+
+      # 5. 构建 Next.js
+      - name: Build Next.js - 构建
+        env:
+          NEXT_PUBLIC_API_BASE_URL: ${{ secrets.NEXT_PUBLIC_API_BASE_URL }}
+          NEXT_PUBLIC_SHOW_TEST_PAGE: ${{ secrets.NEXT_PUBLIC_SHOW_TEST_PAGE }}
+          NODE_ENV: production
+        run: pnpm run build
+
+      # 6. 获取版本号
+      - name: Get version - 获取版本号
+        id: version
+        run: echo "version=$(node -p "require('./package.json').version")" >>
+          $GITHUB_OUTPUT
+
+      # 7. 准备 standalone 目录
+      - name: Prepare standalone - 准备完整的 standalone 目录
+        run: |
+          # 1. 初始化环境（使用绝对路径）
+          echo "=== 初始化环境 ==="
+          WORKSPACE="$GITHUB_WORKSPACE/standalone_dist"
+          rm -rf "$WORKSPACE"
+          mkdir -p "$WORKSPACE"/{.next,node_modules,public}
+
+          # 2. 复制核心文件
+          rsync -aL "$GITHUB_WORKSPACE/.next/standalone/" "$WORKSPACE/"
+          rsync -aL "$GITHUB_WORKSPACE/.next/server/" "$WORKSPACE/.next/server/"
+          rsync -aL "$GITHUB_WORKSPACE/.next/static/" "$WORKSPACE/.next/static/"
+          cp "$GITHUB_WORKSPACE"/.next/*.json "$WORKSPACE/.next/" 2>/dev/null || true
+
+          # 3. 下载函数必要包函数（带双重目录验证）
+          function safe_download_dep {
+            local dep=$1
+            local version=$2
+            local mirror_url="https://registry.npmmirror.com"
+
+            echo "=== 处理 $dep@$version ==="
+
+            # 重置变量
+            local org="" pkg="" tgz_name="" download_url="" target_dir=""
+
+            # 处理作用域包
+            if [[ $dep == @* ]]; then
+              org=${dep%%/*}
+              pkg=${dep#*/}
+              tgz_name="${pkg}-${version}.tgz"
+              download_url="${mirror_url}/${dep}/-/${tgz_name}"
+              target_dir="$WORKSPACE/node_modules/${org}"
+            else
+              tgz_name="${dep}-${version}.tgz"
+              download_url="${mirror_url}/${dep}/-/${tgz_name}"
+              target_dir="$WORKSPACE/node_modules"
+            fi
+
+            TEMP_DIR=$(mktemp -d)
+            cd "$TEMP_DIR"
+
+            echo "下载: $download_url"
+            if curl -L "$download_url" -o "$tgz_name"; then
+              echo "准备解压到: $target_dir/${pkg:-$dep}"
+
+              # 双重验证目录存在
+              mkdir -p "$target_dir" || { echo "❌ 无法创建目录 $target_dir"; return 1; }
+              [ -d "$target_dir" ] || { echo "❌ 目录验证失败: $target_dir"; return 1; }
+
+              # 解压前检查压缩包
+              echo "=== 压缩包内容预览 ==="
+              tar -tzf "$tgz_name" | head -5
+
+              # 解压操作
+              mkdir -p "$target_dir/${pkg:-$dep}"
+              if tar -xzf "$tgz_name" --strip-components=1 -C "$target_dir/${pkg:-$dep}"; then
+                echo "✅ 解压成功"
+                # 立即验证
+                if [ -f "$target_dir/${pkg:-$dep}/package.json" ]; then
+                  echo "✅ 验证成功"
+                  cd -
+                  rm -rf "$TEMP_DIR"
+                  return 0
+                else
+                  echo "❌ 解压后未找到package.json"
+                  echo "目录内容:"
+                  ls -la "$target_dir/${pkg:-$dep}"
+                  cd -
+                  rm -rf "$TEMP_DIR"
+                  return 1
+                fi
+              else
+                echo "❌ 解压失败"
+                cd -
+                rm -rf "$TEMP_DIR"
+                return 1
+              fi
+            else
+              echo "❌ 下载失败"
+              cd -
+              rm -rf "$TEMP_DIR"
+              return 1
+            fi
+          }
+
+          # 4. 下载依赖
+          cd "$GITHUB_WORKSPACE"
+          safe_download_dep "styled-jsx" "5.1.6" || exit 1
+          safe_download_dep "@next/env" "15.5.9" || exit 1
+          safe_download_dep "next" "15.5.9" || exit 1
+          safe_download_dep "react" "18.3.1" || exit 1
+          safe_download_dep "react-dom" "18.3.1" || exit 1
+          safe_download_dep "@swc/helpers" "0.5.21" || exit 1
+          safe_download_dep "client-only" "0.0.1" || exit 1
+
+          # 5. 复制其他文件
+          rsync -aL "$GITHUB_WORKSPACE/public/" "$WORKSPACE/public/"
+          cp "$GITHUB_WORKSPACE/package.json" "$WORKSPACE/"
+          [ -f "$GITHUB_WORKSPACE/.env.production" ] && rsync -aL "$GITHUB_WORKSPACE/.env.production" "$WORKSPACE/" || echo "无.env.production文件，跳过"
+
+          # 6. 终极验证
+          echo "=== 终极验证 ==="
+          function verify_dep {
+            local pkg_path="$WORKSPACE/node_modules/$1/package.json"
+            if [ -f "$pkg_path" ]; then
+              echo "✅ $1 已安装 (版本: $(node -p "require('$pkg_path').version"))"
+            else
+              echo "❌ $1 未安装"
+              echo "查找结果:"
+              find "$WORKSPACE/node_modules" -name "$1" -type d
+              exit 1
+            fi
+          }
+
+          verify_dep "styled-jsx"
+          verify_dep "next"
+          verify_dep "react"
+          verify_dep "react-dom"
+          verify_dep "@swc/helpers"
+          verify_dep "@next/env"
+          verify_dep "client-only"
+
+          echo "=== 目录结构 ==="
+          ls -la "$WORKSPACE/node_modules/"{styled-jsx,next,react,@next,@swc,client-only}
+          echo "✅ 所有依赖验证通过"
+
+      # 8. 安装 7zip
+      - name: Install 7zip - 安装 7z
+        run: sudo apt-get update && sudo apt-get install -y p7zip-full
+
+      # 9. 创建发布包
+      - name: Create release asset - 创建发布包
+        id: pack-assets
+        run: |
+          ASSET_NAME="interaction-and-experience-design-v${{ steps.version.outputs.version }}.7z"
+          FULL_PATH="${{ github.workspace }}/$ASSET_NAME"
+
+          echo "开始打包..."
+          7z a -t7z "$FULL_PATH" standalone_dist/ || true
+
+          echo "压缩包内容验证："
+          7z l "$FULL_PATH" | head -30  # 增加行数确保看到内容
+
+          echo "ASSET_PATH=$FULL_PATH" >> $GITHUB_ENV
+          echo "asset-name=$ASSET_NAME" >> $GITHUB_OUTPUT
+
+          # 验证环境变量设置
+          echo "ASSET_PATH: $ASSET_PATH"
+          echo "asset-name: $ASSET_NAME"
+
+      # 10. 生成 Dockerfile
+      - name: Generate Dockerfile - 生成 Dockerfile
+        run: |
+          cat > Dockerfile << 'EOF'
+          FROM node:22-alpine
+
+          # -------------------------------
+          # 修复镜像源 - 使用正确的 Alpine 版本
+          # -------------------------------
+          RUN ALPINE_VERSION=$(cut -d. -f1-2 /etc/alpine-release) && \
+              echo "使用 Alpine 版本: $ALPINE_VERSION" && \
+              echo "https://mirrors.tuna.tsinghua.edu.cn/alpine/v${ALPINE_VERSION}/main/" > /etc/apk/repositories && \
+              echo "https://mirrors.tuna.tsinghua.edu.cn/alpine/v${ALPINE_VERSION}/community/" >> /etc/apk/repositories && \
+              apk update && \
+              apk add --no-cache p7zip
+
+          # -------------------------------
+          # 设置工作目录
+          # -------------------------------
+          WORKDIR /app
+
+          # -------------------------------
+          # 复制压缩包（使用 GitHub Actions 输出的 version 变量）
+          # -------------------------------
+          COPY interaction-and-experience-design-v${{ steps.version.outputs.version }}.7z /app/
+
+          # -------------------------------
+          # 解压压缩包并清理
+          # -------------------------------
+          RUN 7z x interaction-and-experience-design-v${{ steps.version.outputs.version }}.7z -o/app && \
+              rm interaction-and-experience-design-v${{ steps.version.outputs.version }}.7z && \
+              apk del p7zip
+
+          # -------------------------------
+          # 设置应用目录
+          # -------------------------------
+          WORKDIR /app/standalone_dist
+
+          # -------------------------------
+          # 环境变量
+          # -------------------------------
+          ENV NODE_ENV=production
+          ENV PORT=3000
+
+          # -------------------------------
+          # 暴露端口
+          # -------------------------------
+          EXPOSE 3000
+
+          # -------------------------------
+          # 启动应用
+          # -------------------------------
+          CMD ["node", "server.js"]
+          EOF
+
+          # 输出生成的 Dockerfile 内容，方便调试
+          echo "生成的 Dockerfile 内容如下："
+          cat Dockerfile
+        # 10. 生成 Release 标题
+      - name: Generate release title - 生成 Release 标题
+        id: release_title
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+
+          # 根据分支确定标题后缀
+          if [[ "${{ github.ref }}" == "refs/heads/inside-sever" ]]; then
+            SUFFIX="（内网版本）"
+          elif [[ "${{ github.ref }}" == "refs/heads/aliyun-sever" ]]; then
+            SUFFIX="（阿里云服务器版本）"
+          else
+            SUFFIX=""
+          fi
+
+          RELEASE_TITLE="Release v${VERSION}${SUFFIX}"
+          echo "release_title=${RELEASE_TITLE}" >> $GITHUB_OUTPUT
+          echo "Release 标题: ${RELEASE_TITLE}"
+
+      # 11. 发布 Release
+      - name: Create Release - 发布 Release
+        if: github.event_name == 'push' && (github.ref == 'refs/heads/main' ||
+          github.ref == 'refs/heads/CICDTest' || github.ref ==
+          'refs/heads/inside-sever' || github.ref == 'refs/heads/aliyun-sever')
+        uses: actions/create-release@v1
+        id: create_release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ steps.version.outputs.version }}
+          release_name: ${{ steps.release_title.outputs.release_title }} # 使用动态标题
+          draft: false
+          prerelease: false
+
+      - name: Upload Application Package - 上传最终程序包
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ github.workspace }}/interaction-and-experience-design-v${{
+            steps.version.outputs.version }}.7z
+          asset_name: interaction-and-experience-design-v${{ steps.version.outputs.version
+            }}.7z
+          asset_content_type: application/x-7z-compressed
+
+      - name: Upload Dockerfile - 上传配套的 Dockerfile
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ github.workspace }}/Dockerfile
+          asset_name: Dockerfile
+          asset_content_type: text/plain

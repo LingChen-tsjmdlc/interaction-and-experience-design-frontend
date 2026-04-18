@@ -1,0 +1,176 @@
+{
+  "navbar": {
+    "searchPlaceholder": "昆に質問する...",
+    "downloadApp": "Appをダウンロード",
+    "language": {
+      "label": "言語",
+      "zh": "中文",
+      "en": "English",
+      "ja": "日本語"
+    }
+  },
+  "quickActions": {
+    "imageEdit": "画像編集",
+    "deepThink": "深層思考",
+    "search": "検索",
+    "webDev": "Web開発",
+    "preview": "プレビュー",
+    "research": "研究",
+    "imageGen": "画像生成",
+    "videoGen": "動画生成"
+  },
+  "search": {
+    "placeholder": [
+      "春についての詩を書いてください",
+      "Pythonでクイックソートを実装",
+      "今年のEV市場を分析してください",
+      "この論文を日本語に翻訳する",
+      "会社の忘年会を企画してほしい",
+      "健身プランを作成してほしい",
+      "ブロックチェーンについて説明",
+      "ビジネスメールを書いてほしい",
+      "おすすめのSF映画を紹介して",
+      "効果的なPPTの作り方を教えて"
+    ]
+  },
+  "downloadModal": {
+    "title": "昆をダウンロード",
+    "ios": "iOS",
+    "iosComing": "近日公開",
+    "android": "Android",
+    "androidComing": "近日公開",
+    "web": "Web版",
+    "webDesc": "どこでも使える",
+    "close": "閉じる"
+  },
+  "hero": {
+    "title": "アリババクラウド · 昆",
+    "subtitle": "昆に問うて更多を知る"
+  },
+  "features": {
+    "imageGen": {
+      "title": "画像生成",
+      "description": "Qwen VLoは、アイデアを魅力的な視覚効果に変換することで、クリエイティブプロジェクトを支援します—より深い理解と精密な制御が可能になりました。画像の編集、スタイルの変換、ゼロからの生成、または複数の要素の組み合わせ—すべて理解と創造ができる統一モデルによって動作します。"
+    },
+    "deepResearch": {
+      "title": "深層研究",
+      "description": "Deep Researchは、インターネット上の膨大な情報を活用して、複数ステップの検索、分析、要約を行い、複雑なタスクを完了するインテリジェントエージェントシステムです。",
+      "demo": {
+        "names": ["学術論文", "技術報告書", "特許文献", "業界分析", "市場調査", "競合調査", "ユーザー分析", "トレンド予測"],
+        "times": ["2分前", "3分前", "5分前", "たった今"],
+        "description": "Qwen · Deep Research"
+      }
+    },
+    "webDev": {
+      "title": "Web開発",
+      "description": "Web Devは、自然言語プロンプトだけで美しく実用的なウェブサイトを作成できるようにします。ビジョンを説明するだけで、クリーンなコードとモダンなデザインを備えた完全で使いやすいウェブページが得られます—プログラミングやデザインスキルは不要です。"
+    },
+    "deepThink": {
+      "title": "深層思考",
+      "description": "Qwenは高度な推論と問題解決に優れています。これにより、複雑な問題を明確かつ正確に処理し、リアルタイムのインターネットデータを活用して包括的で論理的かつ実行可能なソリューションを提供できます。",
+      "demo": {
+        "commands": ["プロジェクト要件を分析...", "解空間を探索 → 1024の可能性", "トレードオフ評価：性能 vs 複雑度", "最適アーキテクチャ設計を統合 ✨"],
+        "outputs": {
+          "0": ["✔ 47件の要件文書を分析中", "✔ 12個のコア制約を特定", "✔ 依存関係グラフをマッピング（89ノード）"],
+          "1": ["⚡ 1024個の候補ソリューションを生成"],
+          "2": ["✓ 評価基準：実現可能性(0.35), スケーラビリティ(0.30)", "✓ コスト効率(0.25), メンテナンス性(0.10)"],
+          "3": ["★ 推奨：マイクロサービス + イベントドリブン"]
+        },
+        "username": "DeepThink"
+      }
+    },
+    "search": {
+      "title": "検索",
+      "description": "Qwenのインテリジェント検索機能を活用して、ウェブから答え、リソース、インスピレーションを素早く見つけます。高度なフィルタリングとコンテキスト理解により、Qwenはクエリに一致する正確な結果を提供します。トピックの研究、レシピの検索、新しいトレンドの発見のいずれであっても、Qwenは最も関連性の高い情報を手元に確保し、より賢い意思決定を支援します。"
+    },
+    "multimodal": {
+      "title": "マルチモーダル理解",
+      "description": "Qwenは強力なマルチモーダル理解能力を持ち、テキスト、画像、オーディオ、ビデオなど、さまざまなタイプの情報を同時に処理・分析できます。",
+      "demo": {
+        "rootName": "📦 マルチモーダル入力",
+        "folders": [
+          { "id": "text", "name": "📝 テキスト (Text)", "files": ["学術論文.pdf", "技術報告書.mdx", "コード解析.py"] },
+          { "id": "image", "name": "🖼️ 画像 (Image)", "files": ["製品写真.jpg", "データチャート.png", "ドキュメントスキャン.tif"] },
+          { "id": "audio", "name": "🎵 オーディオ (Audio)", "files": ["会議録音.mp3", "ポッドクリップ.m4a", "音声コマンド.wav"] },
+          { "id": "video", "name": "🎬 動画 (Video)", "files": ["デモ動画.mp4", "チュートリアル.webm", "ライブ再生.flv"] }
+        ]
+      }
+    }
+  },
+  "modelShowcase": {
+    "models": [
+      {
+        "name": "Qwen3.6-35B-A3B",
+        "description": "Qwen3.6シリーズ35B-A3Bネイティブ視覚言語モデル、agentic coding能力を向上させ、コード推論と空間知能を全面的に突破。",
+        "tags": ["latest", "visual"],
+        "icon": "solar:camera-bold-duotone"
+      },
+      {
+        "name": "Qwen3.5-122B-A10B",
+        "description": "Qwen3.5シリーズ122B-A10Bネイティブ視覚言語モデル、線形注意機構とスパースMixture-of-Expertsを統合し、より高い推論効率を実現。",
+        "tags": ["visual"],
+        "icon": "solar:camera-bold-duotone"
+      },
+      {
+        "name": "Qwen3-VL-32B-Thinking",
+        "description": "STEMA数学的問題解決能力を備え、汎用的な画像と動画理解能力に優れ、マルチモーダルエージェント能力はSOTAレベル。",
+        "tags": ["visual"],
+        "icon": "solar:camera-bold-duotone"
+      },
+      {
+        "name": "Qwen3-VL-30B-A3B-Instruct",
+        "description": "画像/動画理解、空間知覚、汎用認識能力を全面的に向上。2D/3D視覚ローカライゼーション能力を備え、複雑な現実世界のタスクに対応。",
+        "tags": ["visual"],
+        "icon": "solar:camera-bold-duotone"
+      },
+      {
+        "name": "Qwen-Omni-Turbo-Realtime",
+        "description": "Qwen-Omniシリーズモデルは動画、オーディオ、画像、テキストなど複数のモーダリティ入力をサポートし、オーディオとテキストを出力。",
+        "tags": ["multimodal"],
+        "icon": "solar:widget-5-bold-duotone"
+      },
+      {
+        "name": "Qwen3-Coder-480B",
+        "description": "Qwen3ベースのコード生成モデル、強力なCoding Agent能力を持ち、コード能力はオープンソースモデルでSOTA。",
+        "tags": ["text"],
+        "icon": "mdi:brain"
+      },
+      {
+        "name": "Qwen3-235B-A22B",
+        "description": "Qwen3ベースの思考モードオープンソースモデル、論理能力、汎用能力、知識理解などが大幅に向上し、高難度推論シーンに適用。",
+        "tags": ["inference"],
+        "icon": "mdi:brain"
+      },
+      {
+        "name": "QwQ-32B",
+        "description": "Qwen2.5-32Bで訓練されたQwQ推論モデル、モデル推論能力を大幅に向上し、主要指標はDeepSeek-R1フルバージョンに迫る。",
+        "tags": ["inference"],
+        "icon": "mdi:brain"
+      },
+      {
+        "name": "VQV-72B-Preview",
+        "description": "Qwenチームが開発した実験的研究モデル、視覚推論能力の向上に特化、特に数学推論領域で。",
+        "tags": ["visual"],
+        "icon": "solar:camera-bold-duotone"
+      }
+    ],
+    "tags": {
+      "latest": "新着",
+      "visual": "視覚理解",
+      "multimodal": "マルチモーダル",
+      "text": "テキスト生成",
+      "inference": "推論"
+    },
+    "tagColors": {
+      "latest": "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300",
+      "visual": "bg-violet-100 text-violet-700 dark:bg-violet-900/30 dark:text-violet-300",
+      "multimodal": "bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300",
+      "text": "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300",
+      "inference": "bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300"
+    }
+  },
+  "footer": {
+    "poweredBy": "提供",
+    "darenGrandPrix": "大広赛"
+  }
+}

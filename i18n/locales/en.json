@@ -1,0 +1,176 @@
+{
+  "navbar": {
+    "searchPlaceholder": "Ask Qwen anything...",
+    "downloadApp": "Download App",
+    "language": {
+      "label": "Language",
+      "zh": "中文",
+      "en": "English",
+      "ja": "日本語"
+    }
+  },
+  "quickActions": {
+    "imageEdit": "Image Edit",
+    "deepThink": "Deep Think",
+    "search": "Search",
+    "webDev": "Web Dev",
+    "preview": "Preview Mode",
+    "research": "Research",
+    "imageGen": "Image Gen",
+    "videoGen": "Video Gen"
+  },
+  "search": {
+    "placeholder": [
+      "Write a poem about spring",
+      "Implement quicksort in Python",
+      "Analyze EV market trends this year",
+      "Translate this paper to Chinese",
+      "Plan a company annual party",
+      "Create a fitness training schedule",
+      "Explain what blockchain is",
+      "Write a business cooperation email",
+      "Recommend sci-fi movies to watch",
+      "How to make a nice PPT"
+    ]
+  },
+  "downloadModal": {
+    "title": "Download Qwen",
+    "ios": "iOS",
+    "iosComing": "Coming Soon",
+    "android": "Android",
+    "androidComing": "Coming Soon",
+    "web": "Web Version",
+    "webDesc": "Use anywhere",
+    "close": "Close"
+  },
+  "hero": {
+    "title": "Aliyun · Qwen",
+    "subtitle": "Ask Qwen, Know More"
+  },
+  "features": {
+    "imageGen": {
+      "title": "Image Generation",
+      "description": "Qwen VLo empowers your creative projects by turning ideas into stunning visuals—now with deeper understanding and precise control. Edit images, transform styles, generate from scratch, or combine multiple elements—all powered by a unified model that understands and creates."
+    },
+    "deepResearch": {
+      "title": "Deep Research",
+      "description": "Deep Research is an intelligent agent system that leverages vast information on the internet to perform multi-step searches, analysis, and summaries to complete complex tasks.",
+      "demo": {
+        "names": ["Academic Paper", "Tech Report", "Patent Doc", "Industry Analysis", "Market Research", "Competitor Study", "User Persona", "Trend Forecast"],
+        "times": ["2m ago", "3m ago", "5m ago", "Just now"],
+        "description": "Qwen · Deep Research"
+      }
+    },
+    "webDev": {
+      "title": "Web Development",
+      "description": "Web Dev enables web developers to create both beautiful and practical websites through natural language prompts alone. Simply describe your vision, and you'll get a complete, ready-to-use webpage with clean code and modern design—no programming or design skills required."
+    },
+    "deepThink": {
+      "title": "Deep Thinking",
+      "description": "Qwen excels at advanced reasoning and problem-solving. This enables it to handle complex questions clearly and accurately, providing comprehensive, logical, and actionable solutions.",
+      "demo": {
+        "commands": ["analyze project requirements...", "explore solution space -> 1024 possibilities", "evaluate trade-offs: performance vs complexity", "synthesize optimal architecture design ✨"],
+        "outputs": {
+          "0": ["✔ Analyzing 47 requirement documents", "✔ Identified 12 core constraints", "✔ Mapped dependency graph (89 nodes)"],
+          "1": ["⚡ Generated 1024 candidate solutions"],
+          "2": ["✓ Scored by: feasibility(0.35), scalability(0.30)", "✓ Cost efficiency(0.25), maintainability(0.10)"],
+          "3": ["★ Recommended: Microservices + Event-Driven"]
+        },
+        "username": "DeepThink"
+      }
+    },
+    "search": {
+      "title": "Search",
+      "description": "Leverage Qwen's intelligent search capabilities to quickly find answers, resources, or inspiration from the web. With advanced filtering and contextual understanding, Qwen delivers precise results that match your queries. Whether researching topics, finding recipes, or discovering new trends, Qwen ensures the most relevant information is at your fingertips, helping you make more informed decisions."
+    },
+    "multimodal": {
+      "title": "Multimodal Understanding",
+      "description": "Qwen possesses powerful multimodal understanding capabilities, able to simultaneously process and analyze various types of information including text, images, audio, and video.",
+      "demo": {
+        "rootName": "📦 Multimodal Inputs",
+        "folders": [
+          { "id": "text", "name": "📝 Text", "files": ["Academic Paper.pdf", "Tech Report.mdx", "Code Analysis.py"] },
+          { "id": "image", "name": "🖼️ Image", "files": ["Product Photo.jpg", "Data Chart.png", "Document Scan.tif"] },
+          { "id": "audio", "name": "🎵 Audio", "files": ["Meeting Recording.mp3", "Podcast Clip.m4a", "Voice Command.wav"] },
+          { "id": "video", "name": "🎬 Video", "files": ["Demo Video.mp4", "Tutorial Clip.webm", "Live Replay.flv"] }
+        ]
+      }
+    }
+  },
+  "modelShowcase": {
+    "models": [
+      {
+        "name": "Qwen3.6-35B-A3B",
+        "description": "Qwen3.6 series 35B-A3B native vision-language model, enhanced agentic coding capabilities with comprehensive breakthroughs in code reasoning and spatial intelligence.",
+        "tags": ["latest", "visual"],
+        "icon": "solar:camera-bold-duotone"
+      },
+      {
+        "name": "Qwen3.5-122B-A10B",
+        "description": "Qwen3.5 series 122B-A10B native vision-language model, integrating linear attention mechanism with sparse mixture-of-experts for higher reasoning efficiency.",
+        "tags": ["visual"],
+        "icon": "solar:camera-bold-duotone"
+      },
+      {
+        "name": "Qwen3-VL-32B-Thinking",
+        "description": "Equipped with STEMA mathematical problem-solving capabilities, outstanding general image and video understanding, multimodal Agent capabilities reaching SOTA level.",
+        "tags": ["visual"],
+        "icon": "solar:camera-bold-duotone"
+      },
+      {
+        "name": "Qwen3-VL-30B-A3B-Instruct",
+        "description": "Comprehensively enhanced image/video understanding, spatial perception, and universal recognition; capable of 2D/3D visual localization for complex real-world tasks.",
+        "tags": ["visual"],
+        "icon": "solar:camera-bold-duotone"
+      },
+      {
+        "name": "Qwen-Omni-Turbo-Realtime",
+        "description": "Qwen-Omni series models support input of multiple modalities including video, audio, images, and text, with audio and text output.",
+        "tags": ["multimodal"],
+        "icon": "solar:widget-5-bold-duotone"
+      },
+      {
+        "name": "Qwen3-Coder-480B",
+        "description": "Code generation model based on Qwen3 with powerful Coding Agent capabilities, coding performance reaches SOTA among open-source models.",
+        "tags": ["text"],
+        "icon": "mdi:brain"
+      },
+      {
+        "name": "Qwen3-235B-A22B",
+        "description": "Open-source thinking model based on Qwen3, with significant improvements in logical capabilities, general abilities, and knowledge understanding, suitable for high-difficulty reasoning scenarios.",
+        "tags": ["inference"],
+        "icon": "mdi:brain"
+      },
+      {
+        "name": "QwQ-32B",
+        "description": "QwQ reasoning model trained on Qwen2.5-32B, significantly enhancing model reasoning capabilities with core metrics approaching DeepSeek-R1 full version.",
+        "tags": ["inference"],
+        "icon": "mdi:brain"
+      },
+      {
+        "name": "VQV-72B-Preview",
+        "description": "OVIO experimental research model developed by Qwen team, focusing on enhancing visual reasoning capabilities, especially in mathematical reasoning domains.",
+        "tags": ["visual"],
+        "icon": "solar:camera-bold-duotone"
+      }
+    ],
+    "tags": {
+      "latest": "Latest",
+      "visual": "Visual Understanding",
+      "multimodal": "Multimodal",
+      "text": "Text Generation",
+      "inference": "Inference"
+    },
+    "tagColors": {
+      "latest": "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300",
+      "visual": "bg-violet-100 text-violet-700 dark:bg-violet-900/30 dark:text-violet-300",
+      "multimodal": "bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300",
+      "text": "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300",
+      "inference": "bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300"
+    }
+  },
+  "footer": {
+    "poweredBy": "Powered by",
+    "darenGrandPrix": "Daren Grand Prix"
+  }
+}

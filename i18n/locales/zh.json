@@ -1,0 +1,176 @@
+{
+  "navbar": {
+    "searchPlaceholder": "向千问提问...",
+    "downloadApp": "下载 App",
+    "language": {
+      "label": "语言",
+      "zh": "中文",
+      "en": "English",
+      "ja": "日本語"
+    }
+  },
+  "quickActions": {
+    "imageEdit": "图像编辑",
+    "deepThink": "深度思考",
+    "search": "搜索",
+    "webDev": "网页开发",
+    "preview": "预览模式",
+    "research": "深入研究",
+    "imageGen": "图像生成",
+    "videoGen": "视频生成"
+  },
+  "search": {
+    "placeholder": [
+      "帮我写一首关于春天的诗",
+      "用Python实现快速排序算法",
+      "分析一下今年新能源汽车市场",
+      "把这篇英文论文翻译成中文",
+      "策划一场公司年会活动方案",
+      "帮我制定一份健身计划表",
+      "解释一下什么是区块链技术",
+      "写一封正式的商务合作邮件",
+      "推荐几部好看的科幻电影",
+      "如何制作一份精美的PPT"
+    ]
+  },
+  "downloadModal": {
+    "title": "下载千问",
+    "ios": "iOS",
+    "iosComing": "即将上线",
+    "android": "Android",
+    "androidComing": "即将上线",
+    "web": "Web 版",
+    "webDesc": "随时随地使用",
+    "close": "关闭"
+  },
+  "hero": {
+    "title": "阿里云 · 千问",
+    "subtitle": "问千问，知更多"
+  },
+  "features": {
+    "imageGen": {
+      "title": "图像生成",
+      "description": "Qwen VLo 通过将想法转化为令人惊叹的视觉效果来为您的创意项目赋能——现在具备更深层次的理解和精准控制。修改图像、转换风格、从零生成或组合多个元素——所有这些都由一个能够理解和创造的统一模型完成。"
+    },
+    "deepResearch": {
+      "title": "深入研究",
+      "description": "Deep Research 是一个智能代理系统，它利用互联网上大量的信息来执行多步骤搜索和分析总结，以完成复杂的任务。它提供全面且易于阅读的报告，显著提高了用户处理耗时任务的效率。",
+      "demo": {
+        "names": ["学术论文", "技术报告", "专利文献", "行业分析", "市场研究", "竞品调研", "用户画像", "趋势预测"],
+        "times": ["2分钟前", "3分钟前", "5分钟前", "刚刚"],
+        "description": "通义千问 · Deep Research"
+      }
+    },
+    "webDev": {
+      "title": "网页开发",
+      "description": "Web Dev 让网页开发者能够仅通过自然语言提示就能创建出既美观又实用的网站。只需描述你的愿景，就能获得一个包含整洁代码和现代设计的完整、即用型网页——无需任何编程或设计技能。"
+    },
+    "deepThink": {
+      "title": "深度思考",
+      "description": "千问在高级推理和解决问题方面表现出色。这使它能够清晰准确地处理复杂问题，利用实时互联网数据提供全面、逻辑性强且可操作的解决方案。",
+      "demo": {
+        "commands": ["分析项目需求...", "探索解空间 → 1024种可能", "权衡取舍：性能 vs 复杂度", "综合最优架构设计 ✨"],
+        "outputs": {
+          "0": ["✔ 正在分析 47 份需求文档", "✔ 识别出 12 个核心约束", "✔ 映射依赖关系图（89个节点）"],
+          "1": ["⚡ 已生成 1024 个候选方案"],
+          "2": ["✓ 评分维度：可行性(0.35), 可扩展性(0.30)", "✓ 成本效率(0.25), 可维护性(0.10)"],
+          "3": ["★ 推荐方案：微服务 + 事件驱动"]
+        },
+        "username": "DeepThink"
+      }
+    },
+    "search": {
+      "title": "搜索",
+      "description": "利用千问的智能搜索功能，快速从网络上找到答案、资源或灵感。凭借先进的过滤和上下文理解能力，千问提供与您的查询相匹配的精确结果。无论是研究主题、查找食谱还是发现新趋势，Qwen 都能确保触手可及最相关的信息，帮助您做出更明智的决策。"
+    },
+    "multimodal": {
+      "title": "多模态理解",
+      "description": "千问拥有强大的多模态理解能力，能够同时处理和分析文本、图像、音频和视频等各种类型的信息。",
+      "demo": {
+        "rootName": "📦 多模态输入",
+        "folders": [
+          { "id": "text", "name": "📝 文本 (Text)", "files": ["学术论文.pdf", "技术报告.mdx", "源代码分析.py"] },
+          { "id": "image", "name": "🖼️ 图像 (Image)", "files": ["产品照片.jpg", "数据图表.png", "文档扫描.tif"] },
+          { "id": "audio", "name": "🎵 音频 (Audio)", "files": ["会议录音.mp3", "播客片段.m4a", "语音指令.wav"] },
+          { "id": "video", "name": "🎬 视频 (Video)", "files": ["演示录像.mp4", "教程片段.webm", "直播回放.flv"] }
+        ]
+      }
+    }
+  },
+  "modelShowcase": {
+    "models": [
+      {
+        "name": "Qwen3.6-35B-A3B",
+        "description": "Qwen3.6系列35B-A3B原生视觉语言模型，提升了agentic coding能力，代码推理与空间智能全面突破。",
+        "tags": ["latest", "visual"],
+        "icon": "solar:camera-bold-duotone"
+      },
+      {
+        "name": "Qwen3.5-122B-A10B",
+        "description": "Qwen3.5系列122B-A10B原生视觉语言模型，融合了线性注意力机制与稀疏混合专家模型，实现更高的推理效率。",
+        "tags": ["visual"],
+        "icon": "solar:camera-bold-duotone"
+      },
+      {
+        "name": "Qwen3-VL-32B-Thinking",
+        "description": "具备STEMa数学类解题能力，通用图像和视频理解能力出众，多模态Agent能力达到SOTA水平。",
+        "tags": ["visual"],
+        "icon": "solar:camera-bold-duotone"
+      },
+      {
+        "name": "Qwen3-VL-30B-A3B-Instruct",
+        "description": "全面提升图像/视频理解、空间感知与万物识别能力；具备视觉2D/3D定位能力，胜任复杂现实任务。",
+        "tags": ["visual"],
+        "icon": "solar:camera-bold-duotone"
+      },
+      {
+        "name": "Qwen-Omni-Turbo-Realtime",
+        "description": "Qwen-Omni 系列模型支持输入多种模态的数据，包括视频、音频、图片、文本，并输出音频与文本。",
+        "tags": ["multimodal"],
+        "icon": "solar:widget-5-bold-duotone"
+      },
+      {
+        "name": "Qwen3-Coder-480B",
+        "description": "基于Qwen3的代码生成模型，具有强大的Coding Agent能力，代码能力达到开源模型 SOTA效果。",
+        "tags": ["text"],
+        "icon": "mdi:brain"
+      },
+      {
+        "name": "Qwen3-235B-A22B",
+        "description": "基于Qwen3的思考模式开源模型，在逻辑能力、通用能力、知识理解等均有大幅提升，适用于高难度推理场景。",
+        "tags": ["inference"],
+        "icon": "mdi:brain"
+      },
+      {
+        "name": "QwQ-32B",
+        "description": "基于Qwen2.5-32B模型训练的QwQ推理模型，大额度提升了模型推理能力，核心指标直逼DeepSeek-R1满血版。",
+        "tags": ["inference"],
+        "icon": "mdi:brain"
+      },
+      {
+        "name": "VQV-72B-Preview",
+        "description": "OVIO由 Qwen 团队开发的实验性研究模型，专注于提升视觉推理能力，尤其在数学推理领域。",
+        "tags": ["visual"],
+        "icon": "solar:camera-bold-duotone"
+      }
+    ],
+    "tags": {
+      "latest": "最新上架",
+      "visual": "视觉理解",
+      "multimodal": "多模态模型",
+      "text": "文本生成",
+      "inference": "推理模型"
+    },
+    "tagColors": {
+      "latest": "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300",
+      "visual": "bg-violet-100 text-violet-700 dark:bg-violet-900/30 dark:text-violet-300",
+      "multimodal": "bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300",
+      "text": "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300",
+      "inference": "bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300"
+    }
+  },
+  "footer": {
+    "poweredBy": "Powered by",
+    "darenGrandPrix": "大广赛"
+  }
+}
